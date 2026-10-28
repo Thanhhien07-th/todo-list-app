@@ -1,8 +1,7 @@
-# Thay đổi cấu trúc danh sách tasks thành danh sách các dictionary[cite: 11]
 tasks = []
 
 def add_task(task_name):
-    """Thêm một công việc mới dưới dạng dictionary với trạng thái completed là False."""
+    """Thêm một công việc mới dưới dạng dictionary."""
     tasks.append({'name': task_name, 'completed': False})
     print(f"Đã thêm công việc: '{task_name}'")
 
@@ -15,9 +14,20 @@ def complete_task(task_index):
     else:
         print("Chỉ số công việc không hợp lệ!")
 
+def delete_task(task_index):
+    """Xóa một công việc khỏi danh sách tasks dựa trên chỉ số (tính từ 1), có kiểm tra hợp lệ[cite: 5, 12]."""
+    real_index = task_index - 1
+    if 0 <= real_index < len(tasks):
+        removed = tasks.pop(real_index)
+        print(f"Đã xóa công việc: '{removed['name']}'")
+    else:
+        print("Chỉ số công việc không hợp lệ để xóa!")
+
 def list_tasks():
-    """Hiển thị danh sách công việc kèm trạng thái [x] hoặc [ ][cite: 11]."""
+    """Hiển thị danh sách công việc kèm trạng thái [x] hoặc [ ]."""
     print("\n--- DANH SÁCH CÔNG VIỆC ---")
+    if not tasks:
+        print("Danh sách trống.")
     for index, task in enumerate(tasks, start=1):
         status = "x" if task['completed'] else " "
         print(f"{index}. [{status}] {task['name']}")
@@ -28,8 +38,10 @@ if __name__ == "__main__":
     add_task("Học bài Git và GitHub")
     add_task("Làm bài tập thực hành ở nhà")
     
-    # Đánh dấu công việc số 1 là đã hoàn thành
+    # Đánh dấu hoàn thành và kiểm tra
     complete_task(1)
+    list_tasks()
     
-    # Hiển thị lại danh sách kiểm tra
+    # Xóa công việc số 2 và kiểm tra lại
+    delete_task(2)
     list_tasks()
